@@ -1,0 +1,39 @@
+{
+  "simulator": {
+    "title": "סימולטור עסקאות",
+    "question": "האם העסקה תאושר?"
+  },
+  "regions": {
+    "France": "צרפת",
+    "Israel": "ישראל",
+    "Cyprus": "קפריסין",
+    "Italy": "איטליה",
+    "USA": "ארה\"ב",
+    "Japan": "יפן"
+  },
+  "picker": {
+    "region": "אזור",
+    "search": "חיפוש",
+    "enterTime": "הזינו שעה",
+    "hour": "שעה",
+    "minute": "דקה",
+    "cancel": "ביטול",
+    "ok": "אישור",
+    "noMatches": "אין תוצאות"
+  },
+  "result": {
+    "rejected": "נדחתה",
+    "localTime": "השעה המקומית ב-{{region}}: {{time}}"
+  },
+  "approved": {
+    "heading": "עסקאות מאושרות",
+    "empty": "אין עדיין עסקאות מאושרות.",
+    "time": "שעה:",
+    "timezone": "אזור זמן:"
+  },
+  "errors": {
+    "loadRegions": "לא ניתן לטעון את רשימת האזורים. האם השרת פועל?",
+    "selectRegion": "נא לבחור אזור.",
+    "submitFailed": "הסימולציה נכשלה. נסו שוב."
+  }
+}

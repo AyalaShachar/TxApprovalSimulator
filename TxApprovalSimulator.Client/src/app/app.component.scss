@@ -71,7 +71,7 @@
 .controls {
   position: relative;
   min-width: 0; // allow the grid track to shrink (prevents horizontal overflow)
-  margin-left: 56px;
+  margin-inline-start: 56px; // logical: flips to the right side in RTL
   padding-top: 56px; // room for the search box that sits above the card
 }
 
@@ -275,7 +275,7 @@
 
   // Drop the desktop indent so nothing overflows on phones.
   .controls {
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 
   // Let the picker shrink below its fixed desktop width on small screens.

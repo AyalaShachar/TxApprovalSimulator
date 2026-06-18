@@ -6,8 +6,8 @@
     </div>
 
     <div class="lang-toggle">
-      <button type="button" class="lang active">ENG</button>
-      <button type="button" class="lang">Hebrew</button>
+      <button type="button" class="lang" [class.active]="language.current() === 'en'" (click)="language.use('en')">ENG</button>
+      <button type="button" class="lang" [class.active]="language.current() === 'he'" (click)="language.use('he')">Hebrew</button>
     </div>
   </header>
 
@@ -19,10 +19,11 @@
           class="region"
           [regions]="regions()"
           [(value)]="selectedRegion"
-          label="Region" />
+          [label]="'picker.region' | translate"
+          [placeholder]="'picker.search' | translate" />
 
         <div class="time-card">
-          <span class="time-card-label">Enter time</span>
+          <span class="time-card-label">{{ 'picker.enterTime' | translate }}</span>
           <div class="time-inputs">
             <div class="time-box">
               <input
@@ -31,7 +32,7 @@
                 max="23"
                 [value]="pad(hour())"
                 (input)="setHour($any($event.target).value)" />
-              <span class="unit">Hour</span>
+              <span class="unit">{{ 'picker.hour' | translate }}</span>
             </div>
             <span class="colon">:</span>
             <div class="time-box">
@@ -41,15 +42,15 @@
                 max="59"
                 [value]="pad(minute())"
                 (input)="setMinute($any($event.target).value)" />
-              <span class="unit">Minute</span>
+              <span class="unit">{{ 'picker.minute' | translate }}</span>
             </div>
           </div>
           <div class="time-actions">
             <img src="clock-icon.svg" alt="" class="clock-icon" />
             <div class="time-buttons">
-              <button type="button" class="link-btn" (click)="cancel()">Cancel</button>
+              <button type="button" class="link-btn" (click)="cancel()">{{ 'picker.cancel' | translate }}</button>
               <button type="button" class="link-btn" (click)="submit()" [disabled]="loading()">
-                {{ loading() ? '...' : 'OK' }}
+                {{ loading() ? '...' : ('picker.ok' | translate) }}
               </button>
             </div>
           </div>
@@ -57,20 +58,20 @@
       </div>
 
       <div class="result-panel">
-        <p class="sim-title">TRANSACTION SIMULATOR</p>
-        <h1 class="sim-question">Will this transaction be approved?</h1>
+        <p class="sim-title">{{ 'simulator.title' | translate }}</p>
+        <h1 class="sim-question">{{ 'simulator.question' | translate }}</h1>
 
         <img src="mockups.png" alt="" class="mockup-img" />
 
         @if (error()) {
-          <p class="msg error">{{ error() }}</p>
+          <p class="msg error">{{ error()! | translate }}</p>
         }
 
         @if (result(); as r) {
           @if (r.status === 'Rejected') {
             <div class="verdict rejected">
-              <span class="verdict-status">{{ r.status }}</span>
-              <span class="verdict-detail">Local time in {{ r.region }}: {{ r.localTime }}</span>
+              <span class="verdict-status">{{ 'result.rejected' | translate }}</span>
+              <span class="verdict-detail">{{ 'result.localTime' | translate: { region: r.region, time: r.localTime } }}</span>
             </div>
           }
         }

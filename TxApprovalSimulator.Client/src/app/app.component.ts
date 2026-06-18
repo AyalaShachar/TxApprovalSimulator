@@ -1,18 +1,21 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { RegionSelectComponent } from './components/region-select/region-select.component';
 import { ApprovedTransactionsComponent } from './components/approved-transactions/approved-transactions.component';
 import { TransactionService } from './services/transaction.service';
+import { LanguageService, Lang } from './services/language.service';
 import { TransactionResult } from './models/transaction.model';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RegionSelectComponent, ApprovedTransactionsComponent],
+  imports: [RegionSelectComponent, ApprovedTransactionsComponent, TranslatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   private readonly service = inject(TransactionService);
+  readonly language = inject(LanguageService);
 
   // ----- State -----
   readonly regions = signal<string[]>([]);
@@ -28,7 +31,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.service.getRegions().subscribe({
       next: regions => this.regions.set(regions),
-      error: () => this.error.set('Could not load regions. Is the API running?')
+      error: () => this.error.set('errors.loadRegions')
     });
     this.service.loadApproved();
   }
@@ -61,7 +64,7 @@ export class AppComponent implements OnInit {
   submit(): void {
     const region = this.selectedRegion();
     if (!region) {
-      this.error.set('Please select a region.');
+      this.error.set('errors.selectRegion');
       return;
     }
 
@@ -79,7 +82,7 @@ export class AppComponent implements OnInit {
         this.loading.set(false);
       },
       error: () => {
-        this.error.set('Simulation failed. Please try again.');
+        this.error.set('errors.submitFailed');
         this.loading.set(false);
       }
     });

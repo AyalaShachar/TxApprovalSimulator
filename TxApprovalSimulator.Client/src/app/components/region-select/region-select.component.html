@@ -5,8 +5,8 @@
     <input
       class="control-input"
       type="text"
-      [placeholder]="value() ?? placeholder()"
-      [ngModel]="open() ? query() : (value() ?? '')"
+      [placeholder]="placeholder()"
+      [ngModel]="inputDisplay()"
       (ngModelChange)="query.set($event); open.set(true)"
       (click)="$event.stopPropagation(); open.set(true)" />
 
@@ -21,10 +21,10 @@
           role="option"
           [class.selected]="region === value()"
           (click)="selectRegion(region)">
-          {{ region }}
+          {{ displayLabel(region) }}
         </li>
       } @empty {
-        <li class="option empty">No matches</li>
+        <li class="option empty">{{ 'picker.noMatches' | translate }}</li>
       }
     </ul>
   }

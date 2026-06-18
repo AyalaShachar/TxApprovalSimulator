@@ -1,5 +1,5 @@
 <section class="approved">
-  <h2 class="approved-title">Approved Transactions</h2>
+  <h2 class="approved-title">{{ 'approved.heading' | translate }}</h2>
 
   <div class="carousel">
     <button type="button" class="nav prev" (click)="scroll(-1)" aria-label="Previous">‹</button>
@@ -7,11 +7,11 @@
     <div class="track" #track>
       @for (tx of transactions(); track tx.id) {
         <article class="card">
-          <div class="card-time"><span class="card-label">Time:</span> {{ tx.localTime }}</div>
-          <div class="card-zone">Time Zone: {{ tx.region }}</div>
+          <div class="card-time"><span class="card-label">{{ 'approved.time' | translate }}</span> {{ tx.localTime }}</div>
+          <div class="card-zone">{{ 'approved.timezone' | translate }} {{ 'regions.' + tx.region | translate }}</div>
         </article>
       } @empty {
-        <p class="empty">No approved transactions yet.</p>
+        <p class="empty">{{ 'approved.empty' | translate }}</p>
       }
     </div>
 

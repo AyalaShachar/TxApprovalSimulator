@@ -1,10 +1,11 @@
 import { Component, ElementRef, input, viewChild } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TransactionResult } from '../../models/transaction.model';
 
 @Component({
   selector: 'app-approved-transactions',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './approved-transactions.component.html',
   styleUrl: './approved-transactions.component.scss'
 })

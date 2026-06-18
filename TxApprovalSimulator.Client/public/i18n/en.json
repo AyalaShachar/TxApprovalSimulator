@@ -1,0 +1,39 @@
+{
+  "simulator": {
+    "title": "TRANSACTION SIMULATOR",
+    "question": "Will this transaction be approved?"
+  },
+  "regions": {
+    "France": "France",
+    "Israel": "Israel",
+    "Cyprus": "Cyprus",
+    "Italy": "Italy",
+    "USA": "USA",
+    "Japan": "Japan"
+  },
+  "picker": {
+    "region": "Region",
+    "search": "search",
+    "enterTime": "Enter time",
+    "hour": "Hour",
+    "minute": "Minute",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "noMatches": "No matches"
+  },
+  "result": {
+    "rejected": "Rejected",
+    "localTime": "Local time in {{region}}: {{time}}"
+  },
+  "approved": {
+    "heading": "Approved Transactions",
+    "empty": "No approved transactions yet.",
+    "time": "Time:",
+    "timezone": "Time Zone:"
+  },
+  "errors": {
+    "loadRegions": "Could not load regions. Is the API running?",
+    "selectRegion": "Please select a region.",
+    "submitFailed": "Simulation failed. Please try again."
+  }
+}
