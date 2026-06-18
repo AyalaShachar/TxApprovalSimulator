@@ -1,0 +1,33 @@
+<div class="region-select" [class.open]="open()">
+  <label class="field-label">{{ label() }}</label>
+
+  <div class="control" (click)="toggle()">
+    <input
+      class="control-input"
+      type="text"
+      [placeholder]="value() ?? placeholder()"
+      [ngModel]="open() ? query() : (value() ?? '')"
+      (ngModelChange)="query.set($event); open.set(true)"
+      (click)="$event.stopPropagation(); open.set(true)" />
+
+    @if (value() || query()) {
+      <button type="button" class="clear-btn" (click)="clear($event)" aria-label="Clear">×</button>
+    }
+  </div>
+
+  @if (open()) {
+    <ul class="options" role="listbox">
+      @for (region of filtered(); track region) {
+        <li
+          class="option"
+          role="option"
+          [class.selected]="region === value()"
+          (click)="selectRegion(region)">
+          {{ region }}
+        </li>
+      } @empty {
+        <li class="option empty">No matches</li>
+      }
+    </ul>
+  }
+</div>
