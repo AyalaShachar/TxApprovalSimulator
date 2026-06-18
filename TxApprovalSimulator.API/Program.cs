@@ -18,9 +18,18 @@ const string ClientCorsPolicy = "AllowClient";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(ClientCorsPolicy, policy =>
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod());
+        policy
+            // Allow any localhost / 127.0.0.1 origin (any port) during development,
+            // so it works regardless of which port `ng serve` picks or whether the
+            // browser uses "localhost" vs "127.0.0.1".
+            .SetIsOriginAllowed(origin =>
+            {
+                if (!Uri.TryCreate(origin, UriKind.Absolute, out var uri))
+                    return false;
+                return uri.Host is "localhost" or "127.0.0.1";
+            })
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 });
 
 var app = builder.Build();
