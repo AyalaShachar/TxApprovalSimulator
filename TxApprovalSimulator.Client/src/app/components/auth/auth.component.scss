@@ -1,0 +1,136 @@
+:host {
+  --accent: #6c5dd3;
+  --primary: #65558f;
+}
+
+/* Modal overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 30, 90, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1000;
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 0 24px 60px rgba(40, 25, 90, 0.3);
+}
+
+.close-x {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 16px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  color: #9a93b8;
+  cursor: pointer;
+
+  &:hover { color: #2d2d3a; }
+}
+
+.auth-welcome {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2d2d3a;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  background: #f1eefc;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #6b6680;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &.active {
+    background: #fff;
+    color: var(--accent);
+    box-shadow: 0 2px 8px rgba(60, 40, 120, 0.1);
+  }
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  color: #6b6680;
+}
+
+.field input {
+  height: 48px;
+  box-sizing: border-box;
+  border: 1.5px solid #d8d3ec;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 15px;
+  color: #2d2d3a;
+  outline: none;
+  transition: border-color 0.15s ease;
+
+  &:focus {
+    border-color: var(--accent);
+  }
+}
+
+.field-error {
+  font-size: 12px;
+  color: #c0392b;
+}
+
+.auth-error {
+  margin: 0;
+  color: #c0392b;
+  font-size: 14px;
+}
+
+.submit-btn {
+  height: 48px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  &:hover { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}

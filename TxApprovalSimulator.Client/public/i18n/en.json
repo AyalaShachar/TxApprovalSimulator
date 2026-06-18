@@ -35,5 +35,25 @@
     "loadRegions": "Could not load regions. Is the API running?",
     "selectRegion": "Please select a region.",
     "submitFailed": "Simulation failed. Please try again."
+  },
+  "auth": {
+    "welcome": "Welcome to the Transaction Approval Simulator",
+    "login": "Log in",
+    "signup": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name",
+    "loginBtn": "Log in",
+    "signupBtn": "Create account",
+    "skip": "Continue as guest",
+    "loggedInAs": "Hi, {{name}}",
+    "logout": "Log out",
+    "required": "Required.",
+    "emailInvalid": "Enter a valid email.",
+    "passwordMin": "At least 6 characters.",
+    "errorLogin": "Invalid email or password.",
+    "errorEmailExists": "This email is already in use.",
+    "errorInvalidInput": "Please check your details — the password must be at least 6 characters.",
+    "errorGeneric": "Something went wrong. Please try again."
   }
 }

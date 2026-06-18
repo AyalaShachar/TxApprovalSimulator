@@ -34,6 +34,42 @@
   display: block;
 }
 
+.header-end {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-greeting {
+  font-size: 14px;
+  color: #4a4a5a;
+}
+
+.logout-btn {
+  border: 1px solid #d8d3ec;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #65558f;
+
+  &:hover { background: #f5f2fd; }
+}
+
+.login-btn {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover { opacity: 0.92; }
+}
+
 .lang-toggle {
   display: flex;
   gap: 8px;

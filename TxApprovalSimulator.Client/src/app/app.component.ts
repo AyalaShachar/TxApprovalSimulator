@@ -2,20 +2,23 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { RegionSelectComponent } from './components/region-select/region-select.component';
 import { ApprovedTransactionsComponent } from './components/approved-transactions/approved-transactions.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { TransactionService } from './services/transaction.service';
-import { LanguageService, Lang } from './services/language.service';
+import { LanguageService } from './services/language.service';
+import { AuthService } from './services/auth.service';
 import { TransactionResult } from './models/transaction.model';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RegionSelectComponent, ApprovedTransactionsComponent, TranslatePipe],
+  imports: [RegionSelectComponent, ApprovedTransactionsComponent, AuthComponent, TranslatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   private readonly service = inject(TransactionService);
   readonly language = inject(LanguageService);
+  readonly auth = inject(AuthService);
 
   // ----- State -----
   readonly regions = signal<string[]>([]);
@@ -27,6 +30,9 @@ export class AppComponent implements OnInit {
   readonly result = signal<TransactionResult | null>(null);
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
+
+  /** Controls the login/signup modal. */
+  readonly showAuthModal = signal(false);
 
   ngOnInit(): void {
     this.service.getRegions().subscribe({

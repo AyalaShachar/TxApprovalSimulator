@@ -5,9 +5,17 @@
       <img src="shva-logo.svg" alt="shva" class="logo-img" />
     </div>
 
-    <div class="lang-toggle">
-      <button type="button" class="lang" [class.active]="language.current() === 'en'" (click)="language.use('en')">ENG</button>
-      <button type="button" class="lang" [class.active]="language.current() === 'he'" (click)="language.use('he')">Hebrew</button>
+    <div class="header-end">
+      @if (auth.isAuthenticated()) {
+        <span class="user-greeting">{{ 'auth.loggedInAs' | translate: { name: auth.user()!.fullName } }}</span>
+        <button type="button" class="logout-btn" (click)="auth.logout()">{{ 'auth.logout' | translate }}</button>
+      } @else {
+        <button type="button" class="login-btn" (click)="showAuthModal.set(true)">{{ 'auth.login' | translate }}</button>
+      }
+      <div class="lang-toggle">
+        <button type="button" class="lang" [class.active]="language.current() === 'en'" (click)="language.use('en')">ENG</button>
+        <button type="button" class="lang" [class.active]="language.current() === 'he'" (click)="language.use('he')">Hebrew</button>
+      </div>
     </div>
   </header>
 
@@ -82,3 +90,7 @@
     <app-approved-transactions [transactions]="approved()" />
   </main>
 </div>
+
+@if (showAuthModal()) {
+  <app-auth (close)="showAuthModal.set(false)" />
+}
