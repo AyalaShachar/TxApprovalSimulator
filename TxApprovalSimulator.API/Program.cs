@@ -13,7 +13,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sql => sql.EnableRetryOnFailure()));
 
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
@@ -59,10 +61,25 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Apply pending EF Core migrations on startup so the app is runnable with a single command.
+// Retry, because in Docker the SQL Server container may not be ready the instant the API starts.
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+    for (var attempt = 1; ; attempt++)
+    {
+        try
+        {
+            db.Database.Migrate();
+            break;
+        }
+        catch (Exception ex) when (attempt < 12)
+        {
+            logger.LogWarning(ex, "Database not ready (attempt {Attempt}/12); retrying in 5s...", attempt);
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+        }
+    }
 }
 
 // Configure the HTTP request pipeline.
