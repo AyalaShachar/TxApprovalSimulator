@@ -3,16 +3,15 @@
   --accent-soft: #ece7fb;
   display: block;
   min-height: 100vh;
-  background: #f4f2fb;
+  background: #fff;
+  overflow-x: hidden; // guard against accidental horizontal scroll
 }
 
 .page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px;
+  width: 100%;
+  padding: 24px 48px;
   background: #fff;
   min-height: 100vh;
-  box-shadow: 0 0 40px rgba(60, 40, 120, 0.06);
 }
 
 /* ---------- Header ---------- */
@@ -27,18 +26,12 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
-.logo-mark {
-  font-size: 26px;
-  color: var(--accent);
-}
-
-.logo-text {
-  font-size: 24px;
-  font-weight: 700;
-  color: #2d2d3a;
+.logo-img {
+  height: 40px;
+  width: auto;
+  display: block;
 }
 
 .lang-toggle {
@@ -64,34 +57,42 @@
 
 /* ---------- Simulator ---------- */
 .content {
-  padding: 32px 0;
+  padding: 40px 48px;
 }
 
 .simulator {
   display: grid;
-  grid-template-columns: minmax(280px, 360px) 1fr;
+  grid-template-columns: 360px 1fr;
   gap: 40px;
   align-items: start;
   margin-bottom: 56px;
 }
 
 .controls {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  position: relative;
+  min-width: 0; // allow the grid track to shrink (prevents horizontal overflow)
+  margin-left: 56px;
+  padding-top: 56px; // room for the search box that sits above the card
 }
 
+/* Search box sits above the time card (top-left); the dropdown opens down over the card. */
 .region {
-  margin-top: 8px;
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  z-index: 3;
+  width: 200px;
 }
 
 .time-card {
-  background: var(--accent-soft);
-  border-radius: 16px;
-  padding: 20px;
+  width: 328px;
+  height: 243px;
+  background: #d6cce7;
+  border-radius: 28px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 20px;
 }
 
 .time-card-label {
@@ -101,30 +102,35 @@
 
 .time-inputs {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 .time-box {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
 
   input {
-    width: 72px;
-    height: 60px;
-    border: none;
-    border-radius: 10px;
-    background: #fff;
+    width: 100%;
+    height: 72px;
+    box-sizing: border-box;
+    padding: 9px 16px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: #e6e0e9; // Surface Container High — default
     text-align: center;
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 600;
-    color: var(--accent);
-    outline: 2px solid transparent;
+    color: #21005d;
+    outline: none;
 
+    // Focused state — Primary Container with a 2px primary border.
     &:focus {
-      outline-color: var(--accent);
+      background: #eaddff;
+      border-color: #6750a4;
     }
 
     &::-webkit-outer-spin-button,
@@ -141,25 +147,45 @@
 }
 
 .colon {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 600;
-  color: var(--accent);
+  color: #21005d;
   align-self: flex-start;
-  margin-top: 12px;
+  margin-top: 18px;
 }
 
-.ok-btn {
-  align-self: flex-end;
-  border: none;
-  background: var(--accent);
-  color: #fff;
-  font-weight: 600;
-  padding: 10px 28px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: opacity 0.15s ease;
+.time-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
 
-  &:hover { opacity: 0.9; }
+.clock-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.time-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Text/link buttons — no background (M3 label/large, Schemes/Primary #65558F). */
+.link-btn {
+  border: none;
+  background: transparent;
+  color: #65558f;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover { background: rgba(101, 85, 143, 0.08); }
   &:disabled { opacity: 0.5; cursor: default; }
 }
 
@@ -167,6 +193,7 @@
 .result-panel {
   text-align: center;
   padding-top: 12px;
+  min-width: 0; // allow the grid track to shrink (image won't force overflow)
 }
 
 .sim-title {
@@ -185,6 +212,15 @@
   font-weight: 500;
   color: #3a3a48;
   margin: 18px 0 24px;
+}
+
+.mockup-img {
+  display: block;
+  width: 100%;
+  max-width: 530px;
+  height: auto;
+  border-radius: 6px;
+  margin: 0 auto 24px;
 }
 
 .msg.error {
@@ -224,9 +260,33 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
+  .page {
+    padding: 16px;
+  }
+
+  .content {
+    padding: 24px 16px;
+  }
+
   .simulator {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 32px;
+  }
+
+  // Drop the desktop indent so nothing overflows on phones.
+  .controls {
+    margin-left: 0;
+  }
+
+  // Let the picker shrink below its fixed desktop width on small screens.
+  .region,
+  .time-card {
+    width: 100%;
+    max-width: 328px;
+  }
+
+  .result-panel {
+    text-align: center;
   }
 
   .sim-question {

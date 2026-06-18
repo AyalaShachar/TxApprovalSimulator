@@ -2,8 +2,7 @@
   <!-- Header -->
   <header class="header">
     <div class="logo">
-      <span class="logo-mark">◎</span>
-      <span class="logo-text">shva</span>
+      <img src="shva-logo.svg" alt="shva" class="logo-img" />
     </div>
 
     <div class="lang-toggle">
@@ -45,9 +44,15 @@
               <span class="unit">Minute</span>
             </div>
           </div>
-          <button type="button" class="ok-btn" (click)="submit()" [disabled]="loading()">
-            {{ loading() ? '...' : 'OK' }}
-          </button>
+          <div class="time-actions">
+            <img src="clock-icon.svg" alt="" class="clock-icon" />
+            <div class="time-buttons">
+              <button type="button" class="link-btn" (click)="cancel()">Cancel</button>
+              <button type="button" class="link-btn" (click)="submit()" [disabled]="loading()">
+                {{ loading() ? '...' : 'OK' }}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -55,15 +60,19 @@
         <p class="sim-title">TRANSACTION SIMULATOR</p>
         <h1 class="sim-question">Will this transaction be approved?</h1>
 
+        <img src="mockups.png" alt="" class="mockup-img" />
+
         @if (error()) {
           <p class="msg error">{{ error() }}</p>
         }
 
         @if (result(); as r) {
-          <div class="verdict" [class.approved]="r.status === 'Approved'" [class.rejected]="r.status === 'Rejected'">
-            <span class="verdict-status">{{ r.status }}</span>
-            <span class="verdict-detail">Local time in {{ r.region }}: {{ r.localTime }}</span>
-          </div>
+          @if (r.status === 'Rejected') {
+            <div class="verdict rejected">
+              <span class="verdict-status">{{ r.status }}</span>
+              <span class="verdict-detail">Local time in {{ r.region }}: {{ r.localTime }}</span>
+            </div>
+          }
         }
       </div>
     </section>

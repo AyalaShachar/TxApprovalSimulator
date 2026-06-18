@@ -47,8 +47,17 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+// CORS must run before anything that can short-circuit the request (e.g. HTTPS redirect),
+// otherwise the preflight (OPTIONS) gets a 307 redirect and the browser reports a CORS failure.
 app.UseCors(ClientCorsPolicy);
+
+// Only force HTTPS outside development. In dev the client talks to the plain-http endpoint,
+// and an HTTPS redirect on the preflight would break CORS.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseAuthorization();
 app.MapControllers();
 

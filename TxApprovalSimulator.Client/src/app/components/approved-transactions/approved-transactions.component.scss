@@ -38,21 +38,46 @@
 
 .track {
   display: flex;
-  gap: 16px;
+  gap: 28px;
   overflow-x: auto;
-  scroll-behavior: smooth;
   padding: 4px;
   flex: 1;
-  scrollbar-width: thin;
+
+  // Hide the scrollbar — navigation is via the arrows.
+  scrollbar-width: none;          // Firefox
+  -ms-overflow-style: none;       // legacy Edge/IE
+
+  &::-webkit-scrollbar {
+    display: none;                // Chrome / Edge / Safari
+  }
 }
 
 .card {
-  flex: 0 0 230px;
-  border: 1px solid #e6e2f2;
-  border-radius: 12px;
-  padding: 18px 20px;
-  background: #fff;
-  box-shadow: 0 4px 14px rgba(60, 40, 120, 0.05);
+  // Show exactly 3 whole cards (2 gaps of 28px between them).
+  flex: 0 0 calc((100% - 56px) / 3);
+  height: 103px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #cac4d0; // Stroke/Border
+  border-radius: 12px;       // Radius/200
+  padding: 24px;             // Space/600
+  background: #fff;          // Background/Default
+}
+
+// Fewer whole cards on smaller screens (never half cards).
+@media (max-width: 900px) {
+  .card {
+    flex-basis: calc((100% - 28px) / 2); // 2 cards
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    flex-basis: 100%; // 1 card
+  }
 }
 
 .card-time {
@@ -66,7 +91,6 @@
 }
 
 .card-zone {
-  margin-top: 8px;
   font-size: 14px;
   color: #6b6b7b;
 }

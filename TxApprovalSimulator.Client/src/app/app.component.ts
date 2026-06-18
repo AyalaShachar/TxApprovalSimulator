@@ -41,6 +41,13 @@ export class AppComponent implements OnInit {
     this.minute.set(this.clamp(value, 59));
   }
 
+  cancel(): void {
+    this.hour.set(8);
+    this.minute.set(0);
+    this.result.set(null);
+    this.error.set(null);
+  }
+
   private clamp(value: string, max: number): number {
     const n = Number.parseInt(value, 10);
     if (Number.isNaN(n)) return 0;
